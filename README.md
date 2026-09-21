@@ -4,7 +4,8 @@
 
 A bounded scientific instrument for fitting and evaluating **fully observed, discrete-time linear dynamics**. It produces candidate models and diagnostics for review and downstream testing.
 
-Implemented operation: `sidt.discrete-lti-lstsq.v1`.
+Implemented operations: `sidt.discrete-lti-lstsq.v1` and the additive
+`sidt.declared-lti-identification.v1` integration boundary.
 
 \[
 x_{k+1}=Ax_k+Bu_k, \qquad y_k=Cx_k+Du_k.
@@ -78,7 +79,15 @@ Rank-deficient regression raises `NonIdentifiableError` with rank diagnostics an
 
 ## System role
 
-PPDA supplies observations and provenance. STFE may condition streams; its operation/result reference belongs in `conditioning_reference`, with full records retained externally. SIDT fits a candidate. GSIE may evaluate that candidate as an explicitly selected dynamics model; OIT may inspect observability for the declared `A` and `C`; SET can test estimation behavior and model mismatch. These are documented handoff boundaries, not implemented cross-repository execution adapters.
+The [declared identification API](docs/DECLARED_IDENTIFICATION.md) retains
+reference-clock times, state frames, ordered coordinates, evidence and sample
+references, optional disjoint holdout declarations, and a rank/conditioning
+gate. It returns only a conditional `A`/`B` candidate; parameter covariance
+remains explicitly unknown. Fresh replay preserves numerical identity while
+assigning separate execution and result identities. Run
+`python examples/declared.py` for the complete synthetic example.
+
+PPDA supplies observations and provenance. STFE may condition streams; its operation/result reference belongs in `conditioning_reference`, with full records retained externally. SIDT fits a candidate. GSIE may evaluate that candidate as an explicitly selected dynamics model; OIT may inspect observability for the declared `A` and `C`; SET can test estimation behavior and model mismatch. CIW owns cross-repository execution around the declared operation; model adoption remains an explicit downstream decision.
 
 SIDT owns the fit and its numerical diagnostics. It does not own evidence truth, canonical state, model adoption, admission, policy, observer tuning, or actuation. A successful fit and a digest do not establish physical validity, causal validity, stability, or operational authority.
 

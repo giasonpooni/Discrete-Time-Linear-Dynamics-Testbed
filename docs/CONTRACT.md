@@ -1,5 +1,10 @@
 # Input, result, and identity contract
 
+This document describes the original `fit_lti` and optional export contracts.
+The additive [declared identification operation](DECLARED_IDENTIFICATION.md)
+retains and validates reference times, state frames, evidence partitions, and
+conditioning limits while preserving these existing APIs.
+
 ## Input alignment
 
 For `N` transitions, `n` observed state components, `m` inputs, and `p` optional outputs:

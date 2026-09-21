@@ -13,7 +13,11 @@ SIDT computes candidate dynamics from explicitly supplied, fully observed state 
 | Computational Instrument Workbench (CIW) | Candidate/diagnostic inspection and verification records | Workspace sessions and instrument binding remain external |
 | Evidence and State Management (ESM) | Evidence, result, execution, and verification references if admitted by its own policy | SIDT makes no admission decision and writes no canonical state |
 
-The current repository implements local fit and one-step evaluation APIs. The table describes contract placement; cross-repository adapters, signed evidence bindings, ingestion services, and operational execution are not claimed to exist here.
+The current repository implements local fit and one-step evaluation APIs plus
+the [declared identification operation](DECLARED_IDENTIFICATION.md) for external
+integration sessions. CIW owns provider invocation and session construction.
+SIDT does not implement signed evidence bindings, ingestion services, or
+operational execution.
 
 Private acquisition profiles, real telemetry, calibration details, experiment records, operating thresholds, and adoption policies are not required for the public synthetic example. Public documentation describes the instrument interface and its limits. No customer-specific data or control-plane implementation is included.
 
