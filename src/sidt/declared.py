@@ -52,14 +52,27 @@ def _text(value: object, name: str) -> str:
     return value
 
 
-def _positive(value: object, name: str) -> float:
+def _finite_float64(value: object, name: str) -> float:
     if type(value) not in (int, float):
-        raise ValueError(f"{name} must be finite and positive")
+        raise ValueError(f"{name} must be a finite number")
     try:
         converted = float(value)
     except (ValueError, OverflowError) as error:
-        raise ValueError(f"{name} must be finite and positive") from error
-    if not math.isfinite(converted) or converted <= 0:
+        raise ValueError(f"{name} must be a finite number") from error
+    if not math.isfinite(converted):
+        raise ValueError(f"{name} must be a finite number")
+    # Python compares an int to a float without first rounding the int. Thus
+    # this rejects 2**53+1 while allowing exactly representable large epochs.
+    # A supplied float already declares its binary64 value; ordinary fractional
+    # times retain the existing bounded interval comparison below.
+    if converted != value:
+        raise ValueError(f"{name} must be exactly representable as float64")
+    return converted
+
+
+def _positive(value: object, name: str) -> float:
+    converted = _finite_float64(value, name)
+    if converted <= 0:
         raise ValueError(f"{name} must be finite and positive")
     return converted
 
@@ -98,13 +111,13 @@ def _trajectory(value: object, name: str, dt: float, *, holdout: bool) -> dict:
     times = data["sample_times"]
     if not isinstance(times, list) or len(times) != len(states):
         raise ValueError(f"{name}.sample_times must align one-to-one with state rows")
-    if any(type(t) not in (int, float) or not math.isfinite(t) for t in times):
-        raise ValueError(f"{name}.sample_times must contain finite numbers")
+    for time in times:
+        _finite_float64(time, f"{name}.sample_times")
     # A bounded tolerance covers representation of the declared seconds, not
     # timing uncertainty. Large epochs with inadequate resolution are refused.
     tolerance = dt * 1e-9
     for previous, current in zip(times, times[1:]):
-        step = current - previous
+        step = _finite_float64(current - previous, f"{name}.sample_times interval")
         if step <= 0 or not math.isfinite(step) or not math.isclose(
             step, dt, rel_tol=0, abs_tol=tolerance,
         ):
@@ -159,6 +172,7 @@ def identify_declared(payload: Mapping, *, execution_ref: str) -> dict:
     execution = _text(execution_ref, "execution_ref")
     dt = _positive(inputs["sample_interval"], "sample_interval")
     limit = _positive(inputs["condition_limit"], "condition_limit")
+    cutoff = None if inputs.get("rcond") is None else _positive(inputs["rcond"], "rcond")
     if limit < 1:
         raise ValueError("condition_limit must be at least one")
     training = _trajectory(inputs["training"], "training", dt, holdout=False)
@@ -204,7 +218,7 @@ def identify_declared(payload: Mapping, *, execution_ref: str) -> dict:
         candidate = fit_lti(
             training["states"], training["inputs"], sample_interval=dt,
             conditioning_reference=inputs.get("conditioning_reference"),
-            rcond=inputs.get("rcond"), **metadata,
+            rcond=cutoff, **metadata,
         )
     except NonIdentifiableError as error:
         numerical["status"] = "nonidentifiable"

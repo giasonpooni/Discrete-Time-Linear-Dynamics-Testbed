@@ -189,3 +189,62 @@ def test_autonomous_input_and_absent_holdout_remain_supported():
     np.testing.assert_allclose(numerical["candidate"]["A"], [[0.5]], atol=1e-14)
     assert numerical["candidate"]["B"] == [[]]
     assert numerical["holdout_evaluation"] is None
+
+
+def test_unrepresentable_integer_sample_interval_never_changes_model_metadata():
+    source = declaration()
+    del source["holdout"]
+    source["sample_interval"] = 9007199254740993
+    source["input_names"], source["input_units"] = [], []
+    source["training"].update(
+        states=[[1], [2], [4]], inputs=[[], []],
+        sample_times=[0, 9007199254740993, 18014398509481986],
+        sample_refs=["sample:training:0", "sample:training:1", "sample:training:2"],
+    )
+    with pytest.raises(ValueError, match="sample_interval must be exactly representable"):
+        identify_declared(source, execution_ref="execution:lossy-interval")
+
+
+@pytest.mark.parametrize("field", ["condition_limit", "rcond"])
+def test_numeric_policy_rejects_lossy_integer_conversion(field):
+    source = declaration()
+    source[field] = 2**53 + 1
+    with pytest.raises(ValueError, match=f"{field} must be exactly representable"):
+        identify_declared(source, execution_ref="execution:lossy-policy")
+
+
+def test_integer_epoch_requires_exact_representation_but_large_exact_times_work():
+    source = declaration()
+    del source["holdout"]
+    source["sample_interval"] = 4
+    source["training"]["sample_times"] = [2**54 + 4 * i for i in range(5)]
+    result = identify_declared(source, execution_ref="execution:exact-epoch")
+    assert result["numerical_result"]["status"] == "identified"
+    source["training"]["sample_times"] = [2**54 + 1 + 4 * i for i in range(5)]
+    with pytest.raises(ValueError, match="sample_times must be exactly representable"):
+        identify_declared(source, execution_ref="execution:lossy-epoch")
+
+
+def test_integer_delta_cannot_round_even_when_endpoints_are_representable():
+    source = declaration()
+    del source["holdout"]
+    source["sample_interval"] = 2**53
+    source["training"].update(
+        states=[[1], [2], [4]], inputs=[[1], [0]],
+        sample_times=[-(2**53), 1, 2**53],
+        sample_refs=["sample:training:0", "sample:training:1", "sample:training:2"],
+    )
+    with pytest.raises(ValueError, match="sample_times interval must be exactly representable"):
+        identify_declared(source, execution_ref="execution:lossy-delta")
+
+
+def test_fractional_times_keep_declared_interval_with_representation_tolerance():
+    source = declaration()
+    del source["holdout"]
+    source["sample_interval"] = 0.1
+    source["rcond"] = 1e-12
+    source["training"]["sample_times"] = [0.0, 0.1, 0.2, 0.3, 0.4]
+    result = identify_declared(source, execution_ref="execution:fractional")
+    assert result["numerical_result"]["status"] == "identified"
+    assert result["numerical_result"]["candidate"]["metadata"]["sample_interval"] == 0.1
+    assert result["numerical_result"]["diagnostics"]["relative_rank_cutoff"] == 1e-12

@@ -32,7 +32,11 @@ Every state row has one reference time and one unique `sample_ref`. Times must
 increase by the declared interval, within absolute tolerance
 `sample_interval * 1e-9` seconds. This tolerance concerns numeric representation,
 not estimated time uncertainty. Epochs that lose the interval's precision are
-refused. SIDT does not alter timestamps, interpolate, supply absent clock maps,
+refused. Sample times, their integer differences, the sample interval, and
+numeric policy scalars must be exactly representable as float64 before any
+conversion; a large integer cannot silently become a neighboring float. A
+supplied floating-point fraction retains its declared binary64 value and the
+bounded interval tolerance above. SIDT does not alter timestamps, interpolate, supply absent clock maps,
 or prove calibration applicability. Upstream time/calibration records belong in
 the retained evidence references and must be validated by the consuming session.
 
