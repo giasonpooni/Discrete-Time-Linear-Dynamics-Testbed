@@ -17,6 +17,27 @@ Without output observations, solve `Z @ Theta = X_plus` in least squares, where 
 
 Each target column has its own coefficients. The unweighted multi-target formulation does not pool state/output physical units into a decision score. No explicit matrix inverse or normal-equation inversion is used.
 
+## Regression data flow
+
+```mermaid
+flowchart TD
+    X["Observed X minus"] --> Z["Design Z"]
+    U["Aligned input U"] --> Z
+    Y["X plus; optional output Y"] --> L["SVD-backed least squares"]
+    Z --> L
+    L --> G{"Rank equals n plus m?"}
+    G -- "no" --> F["Rank diagnostics; no model"]
+    G -- "yes" --> C["Partition coefficient matrices"]
+    C --> M["A, B; optional C, D"]
+    C --> R["Observed minus predicted"]
+    R --> D["Residual arrays and per-target sums"]
+```
+
+Solid arrows show the implemented local regression flow. `X minus` means
+`states[:-1]`; `X plus` means `states[1:]`. The returned SVD rank is tested before
+a candidate is exposed. Residual diagnostics describe the supplied data and
+remain separate from parameter uncertainty, stability and external verification.
+
 ## Numerical identifiability
 
 The effective relative rank cutoff is the supplied `rcond`, or `float64 epsilon * max(Z.shape)` when omitted. Singular values are assessed by `lstsq` relative to the largest singular value under that cutoff. The result records the effective cutoff and singular spectrum.

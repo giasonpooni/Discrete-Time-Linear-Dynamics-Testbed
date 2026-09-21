@@ -12,6 +12,27 @@ x_{k+1}=Ax_k+Bu_k, \qquad y_k=Cx_k+Du_k.
 
 The state trajectory must be supplied explicitly. Optional measured output rows permit fitting `C` and `D`. This implementation cannot identify a hidden state realization from inputs and outputs alone.
 
+## Candidate fitting and evaluation
+
+```mermaid
+flowchart TD
+    O["Observed state and input rows"] --> L["Least-squares fit"]
+    L --> G{"Full regressor rank?"}
+    G -- "no" --> X["Refuse candidate"]
+    G -- "yes" --> M["Candidate A, B; optional C, D"]
+    M --> E["One-step evaluation"]
+    H["Caller-supplied holdout rows"] --> E
+    E --> R["Residuals and component RMSE"]
+    M -. "conceptual: explicit adoption" .-> S["GSIE model use"]
+```
+
+Solid arrows show current local fitting and evaluation calls. Insufficient
+excitation can appear as deficient regressor rank; passing this gate does not
+prove general excitation or physical identifiability. The caller establishes
+holdout independence. The labelled dotted arrow is a conceptual downstream
+relationship, not an implemented execution adapter or model-adoption action.
+See the [system diagram atlas](https://github.com/giasonpooni/Computational-Instrumentation-Workbench/blob/main/docs/DIAGRAMS.md).
+
 ## Install and run
 
 Requires Python 3.11 or newer.

@@ -29,6 +29,28 @@ Rank deficiency raises `NonIdentifiableError`; its `diagnostics` records the sam
 
 `evaluate_one_step` returns a `OneStepEvaluation`: candidate digest, sample count, residual matrices, and per-component RMSE. The caller must supply the same sample interval, coordinates, units, and conditioning convention as the candidate. The evaluator checks matrix shape and numeric finiteness, but cannot prove that a dataset is independent, correctly timed, or held out. It does not refit the model or recursively propagate a trajectory.
 
+## Model identity and exported execution identity
+
+```mermaid
+flowchart TD
+    M["Matrices, metadata and rank policy"] --> D["Candidate content digest"]
+    M --> N["Explicit numerical payload"]
+    D --> N
+    S["Source refs and actual input payload"] --> E["Optional SET export"]
+    N --> E
+    O["Operation identity"] --> E
+    X["Caller execution identity"] --> E
+    E --> R["Result artifact and result digest"]
+    R -. "conceptual: separate check" .-> V["Independent verification record"]
+```
+
+Solid arrows show current content binding when the caller invokes the optional
+exporter. The candidate digest identifies model content; it excludes source
+data and is not an execution identity. The result digest includes the declared
+execution identity. Source references and the supplied revision are not
+authenticated by export. The labelled dotted relationship requires a separate
+verifier; exported verification references start empty.
+
 ## Identity separation
 
 The candidate digest is SHA-256 over UTF-8 JSON with sorted keys, compact separators, finite numeric values, matrices, metadata, schema `sidt.dynamics-candidate.v1`, and the effective relative rank cutoff. It excludes residuals and source data. Equal model content may result from distinct evidence and executions. Different platforms may yield slightly different floating-point matrices and therefore different digests.
