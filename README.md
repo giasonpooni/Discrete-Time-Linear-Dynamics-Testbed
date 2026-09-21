@@ -70,7 +70,7 @@ python -m pip install -e '.[test,exchange]'
 python examples/exchange.py
 ```
 
-The optional dependency is pinned to SET revision `c4d39c755187796ce2c72552a90454871c516c8f`. `sidt.exchange.export_result` maps explicitly supplied JSON values into SET's existing `notation.instrument.result-artifact.v1` contract and invokes its validator. The example maps the actual fitted matrices into ordered coefficient components, includes full input and numerical-result records, and marks parameter covariance `unknown`. Its timestamps, evidence/execution references, and all-zero source revision are clearly synthetic caller declarations.
+The optional dependency is pinned to SET revision `bd261a765281a95312f7c91a3857233476294c5b`. `sidt.exchange.export_result` maps explicitly supplied JSON values into SET's existing `notation.instrument.result-artifact.v1` contract and invokes its validator. The example maps the actual fitted matrices into ordered coefficient components, includes full input and numerical-result records, and marks parameter covariance `unknown`. Its timestamps, evidence/execution references, and all-zero source revision are clearly synthetic caller declarations.
 
 This is a conformance export. It does not authenticate provenance, establish independent verification, adopt the candidate, or provide a native CIW execution adapter. Exchange tests skip when the optional validator package is absent; they run when the `exchange` extra is installed.
 
