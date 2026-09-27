@@ -1,6 +1,6 @@
 # System Identification and Dynamics Testbed
 
-[Stack placement and ownership](docs/STACK.md) · [License](LICENSE)
+[Notations Engineering Terminal (CIW)](https://github.com/giasonpooni/Notations-Engineering-Terminal) · [Stack placement and ownership](docs/STACK.md) · [License](LICENSE)
 
 A bounded scientific instrument for fitting and evaluating **fully observed, discrete-time linear dynamics**. It produces candidate models and diagnostics for review and downstream testing.
 
@@ -32,7 +32,7 @@ excitation can appear as deficient regressor rank; passing this gate does not
 prove general excitation or physical identifiability. The caller establishes
 holdout independence. The labelled dotted arrow is a conceptual downstream
 relationship, not an implemented execution adapter or model-adoption action.
-See the [system diagram atlas](https://github.com/giasonpooni/Computational-Instrumentation-Workbench/blob/main/docs/DIAGRAMS.md).
+See the [system diagram atlas](https://github.com/giasonpooni/Notations-Engineering-Terminal/blob/main/docs/DIAGRAMS.md).
 
 ## Install and run
 
@@ -87,7 +87,7 @@ remains explicitly unknown. Fresh replay preserves numerical identity while
 assigning separate execution and result identities. Run
 `python examples/declared.py` for the complete synthetic example.
 
-PPDA supplies observations and provenance. STFE may condition streams; its operation/result reference belongs in `conditioning_reference`, with full records retained externally. SIDT fits a candidate. GSIE may evaluate that candidate as an explicitly selected dynamics model; OIT may inspect observability for the declared `A` and `C`; SET can test estimation behavior and model mismatch. CIW owns cross-repository execution around the declared operation; model adoption remains an explicit downstream decision.
+PPDA supplies observations and provenance. STFE may condition streams; its operation/result reference belongs in `conditioning_reference`, with full records retained externally. SIDT fits a candidate. GSIE may evaluate that candidate as an explicitly selected dynamics model; OIT may inspect observability for the declared `A` and `C`; SET can test estimation behavior and model mismatch. Notations Engineering Terminal (CIW) owns cross-repository execution around the declared operation; model adoption remains an explicit downstream decision.
 
 SIDT owns the fit and its numerical diagnostics. It does not own evidence truth, canonical state, model adoption, admission, policy, observer tuning, or actuation. A successful fit and a digest do not establish physical validity, causal validity, stability, or operational authority.
 
