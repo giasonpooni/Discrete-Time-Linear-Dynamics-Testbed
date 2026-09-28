@@ -1,4 +1,27 @@
-# System Identification and Dynamics Testbed
+# Dynamics Fitter
+
+**Fit candidate dynamics from observed trajectories and inspect rank, residuals and holdout error.**
+
+| NET micro-tool | Identity and scope |
+| --- | --- |
+| User-facing name | **Dynamics Fitter** |
+| Proposed NET operation | `dynamics.fit` |
+| Implementation repository | `System-Identification-Dynamics-Testbed` |
+| Existing provider and import | System Identification and Dynamics Testbed / SIDT; `sidt` |
+| Existing operations | `sidt.discrete-lti-lstsq.v1` and `sidt.declared-lti-identification.v1` |
+| Current boundary | Fully observed, discrete-time linear dynamics; no hidden-state realization identification |
+
+`dynamics.fit` is the agreed NET-facing operation target, **not a newly installed
+command or a general nonlinear physics-engine fitting service**. Use the existing
+`sidt` functions and examples below. A fitted candidate is not automatically
+adopted, proven stable or treated as a physically validated model. Parameter
+covariance in the declared identification path remains explicitly unknown.
+
+NET owns session composition and dispatch; this provider owns fitting and its
+numerical diagnostics. **Stability Check** and **Observability Check** remain
+separate analyses. Evidence, operation specifications, execution attempts and
+verification records remain distinct. Repository URLs, imports, operation IDs,
+contracts, historical pins and licence terms are unchanged.
 
 [Notations Engineering Terminal (CIW)](https://github.com/giasonpooni/Notations-Engineering-Terminal) · [Stack placement and ownership](docs/STACK.md) · [License](LICENSE)
 
