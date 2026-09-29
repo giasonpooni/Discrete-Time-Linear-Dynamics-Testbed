@@ -2,6 +2,14 @@
 
 **Fit candidate dynamics from observed trajectories and inspect rank, residuals and holdout error.**
 
+## Notation Systems and this instrument
+
+**Notation Systems develops evidence-backed industrial intelligence and computational instrumentation, connecting expert knowledge and observations to bounded, inspectable work.** Its industrial domains remain **PAYLOAD** (physical operations, facilities, materials and logistics, including Caravan), **LANDSHARK** (land/site and spatial constraints), and **TRADEWIND** (contracts, prices and exposure). PayloadOS/ESM govern industrial evidence/state; Dossier Services packages scoped service outputs.
+
+This instrument owns **candidate dynamics fitting and its numerical diagnostics**, not model adoption or plant control. [Notations Systems Terminal (NET)](https://github.com/giasonpooni/Notations-Systems-Terminal) coordinates typed work while preserving independent specialist implementations and NET / `net` / `ciw` interfaces. The current repository is `Discrete-Time-Linear-Dynamics-Testbed`; historical names and pins below remain compatibility context, not new packages.
+
+The intended expertise-amplification path is **expert input → reviewed specification → bounded execution → observations and checks → separately authorized integration/release**. Manufacturing, robotics, materials, GIS/remote sensing, DSP and analytics are workload families, not claims that every adapter exists. Cartesian Graphics is the firm's games/graphics/physics/simulation label; its 1792 reference workload does not physically validate a fitted model. Evidence, operation, execution, result and verification remain distinct. General capture and dependency-aware rebuilding are development targets; logical containers are not OS security sandboxes. Existing APIs, numerical limits and licences remain unchanged. Evaluate accepted, integrated work together with human effort, cost, rework and empirical validation where required.
+
 | NET micro-tool | Identity and scope |
 | --- | --- |
 | User-facing name | **Dynamics Fitter** |
