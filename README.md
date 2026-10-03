@@ -4,11 +4,25 @@
 
 [Run](#install-and-run) · [API](#api) · [Research profile](#research-profile) · [Numerical assumptions](docs/NUMERICS.md)
 
-## Notation Systems and this instrument
+## Organization
+
+**Notation Systems Inc** is the parent organization: a scientific computing and systems engineering company developing computational instruments, software and interactive environments for understanding and building physical and virtual systems.
+
+The company's development direction connects measurement, state estimation and sensor fusion, scientific modelling, simulation and execution, from materials and machines to interactive worlds.
+
+| Division | Focus |
+| --- | --- |
+| **Notations Gaming** | Games, graphics, world building, interactive environments and gameplay simulation. |
+| **Notations Manufacturing** | Design, machinery integration, process development, fabrication and production systems. |
+| **Notations Laboratories** | Research and experimental validation in scientific computing, measurement, physics and chemistry modelling, materials and simulation. |
+
+**Repository role:** Dynamics Fitter contributes fully observed discrete linear dynamics identification, rank diagnostics and holdout evaluation to **Notations Laboratories**. It supports development of models for simulation and cyberphysical systems; a fitted candidate requires appropriate uncertainty characterization and physical validation before industrial use.
+
+## Instrument role
 
 **Notation Systems — Frontier Tooling and Instrumentation for Digital Futures.** We build computational instruments and operational tooling connecting scientific methods, specialized computation and human expertise.
 
-This provider owns candidate fitting and numerical diagnostics, not model adoption or plant control. [Notations Systems Terminal](https://github.com/giasonpooni/Notations-Systems-Terminal) composes supported investigations; specialist implementations, evidence admission and creative game state retain their separate authority. Cartesian Graphics develops interactive worlds, simulation technology and digital IP. [Organization profile](https://github.com/giasonpooni/Notations-Systems-Terminal/blob/b41b84922d4963a9206202029afd1e78b9451f9c/PUBLIC_POSITIONING.md).
+This provider owns candidate fitting and numerical diagnostics, not model adoption or plant control. [Notations Systems Terminal](https://github.com/atomtrapping/Notations-Systems-Terminal) composes supported investigations; specialist implementations, evidence admission and creative game state retain their separate authority. Notations Gaming develops interactive worlds, simulation technology and digital IP. [Current organization](#organization).
 
 | Identity | Scope |
 | --- | --- |
@@ -113,7 +127,7 @@ Conformance does not authenticate provenance, independently verify the fit, adop
 
 Compare one-step and appropriately designed rollout errors, excitation regimes, missing/invalid inputs and reproducibility before optimizing execution. A small residual does not prove the model's physical meaning; preserving a fit under representation changes requires the same inputs and assumptions.
 
-[Shared research protocol](https://github.com/giasonpooni/Notations-Systems-Terminal/blob/b41b84922d4963a9206202029afd1e78b9451f9c/RESEARCH_PROGRAMME.md). Cross-language implementations, CUDA and automatic telemetry need separate qualification. This documentation changes no runtime code, tests, dependencies, licences or release status and claims no new test run.
+[Historical research protocol](https://github.com/atomtrapping/Notations-Systems-Terminal/blob/b41b84922d4963a9206202029afd1e78b9451f9c/RESEARCH_PROGRAMME.md). Cross-language implementations, CUDA and automatic telemetry need separate qualification. This documentation changes no runtime code, tests, dependencies, licences or release status and claims no new test run.
 
 ## License
 
