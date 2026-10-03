@@ -36,6 +36,18 @@ x_{k+1}=Ax_k+Bu_k, \qquad y_k=Cx_k+Du_k.
 
 The state trajectory must be supplied explicitly. Optional measured output rows permit fitting `C` and `D`. This implementation cannot identify a hidden state realization from inputs and outputs alone.
 
+## Organization
+
+**Notation Systems Inc** is the parent organization.
+
+| Division | Focus |
+| --- | --- |
+| **Notations Gaming** | Games, graphics and interactive worlds. |
+| **Notations Manufacturing** | Industrial design, materials and manufacturing systems. |
+| **Notations Laboratories** | Research, scientific computing, simulation and experimental validation. |
+
+This repository contributes dynamics identification and evaluation tools to **Notations Laboratories**, supporting modeling and simulation work across the divisions.
+
 ## Candidate fitting and evaluation
 
 ```mermaid
