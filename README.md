@@ -23,7 +23,7 @@ separate analyses. Evidence, operation specifications, execution attempts and
 verification records remain distinct. Repository URLs, imports, operation IDs,
 contracts, historical pins and licence terms are unchanged.
 
-[Notations Engineering Terminal (CIW)](https://github.com/giasonpooni/Notations-Engineering-Terminal) · [Stack placement and ownership](docs/STACK.md) · [License](LICENSE)
+[Notations Engineering Terminal (CIW)](https://github.com/atomtrapping/Notations-Systems-Terminal) · [Stack placement and ownership](docs/STACK.md) · [License](LICENSE)
 
 A bounded scientific instrument for fitting and evaluating **fully observed, discrete-time linear dynamics**. It produces candidate models and diagnostics for review and downstream testing.
 
@@ -69,7 +69,7 @@ excitation can appear as deficient regressor rank; passing this gate does not
 prove general excitation or physical identifiability. The caller establishes
 holdout independence. The labelled dotted arrow is a conceptual downstream
 relationship, not an implemented execution adapter or model-adoption action.
-See the [system diagram atlas](https://github.com/giasonpooni/Notations-Engineering-Terminal/blob/main/docs/DIAGRAMS.md).
+See the [system diagram atlas](https://github.com/atomtrapping/Notations-Systems-Terminal/blob/main/docs/DIAGRAMS.md).
 
 ## Install and run
 
